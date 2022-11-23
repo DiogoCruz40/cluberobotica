@@ -1,0 +1,112 @@
+<section id="impressao3d" class="impressao3d">
+    <div class="container container-box">
+        <div class="m-4">
+            <h2 class="big-title d-inline">
+                Impressões 3d
+            </h2>
+            <button class="btn btn-outline-primary fw-bold float-end"  (click)="openpedidoimpressao3d()"><i
+                    class="fas fa-plus"></i> Adicionar Pedido Impressao 3d</button>
+            <hr class="big-title-line mb-3">
+        </div>
+        <p-toast></p-toast>
+        <div class="content-box">
+            <div class="card-list overflow-hidden align-items-center">
+                <div class="row no-gutters px-3 pb-4" *ngIf="impressao3dList.length > 0 else emptyList">
+                    <p-confirmDialog defaultFocus="none" rejectButtonStyleClass="p-button-outlined p-button-primary"
+                        acceptButtonStyleClass="p-button-primary"></p-confirmDialog>
+                        <div *ngFor="let impressao of impressao3dList; let i = index" class="col-12 pt-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row no-gutters">
+                                        <div class="col-8 d-flex">
+                                            <h4 class="fw-bold text-left float-left" >Pedido de Impressão 3d</h4>
+                                          
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="text-end">
+                                                <button class="btn btn-primary me-2" ><i
+                                                        class="fas fa-edit"></i></button>
+    
+                                                <button class="btn btn-primary" ><i
+                                                        class="fas fa-trash"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div #oferta class="row no-gutters px-3 align-items-center card-info">
+                                    <div class="col-8">
+                                        <span class="mt-2 mb-1 me-1 fw-bold">Nome:</span>
+                                        <span [innerHTML]="impressao.nome "> <br />
+                                        </span>
+                                    </div>
+                                 
+                                    <div class="col-6">
+                                        <span class="mt-2 mb-1 me-1 fw-bold">Email:</span>
+                                        <span [innerHTML]="impressao.email"> <br />
+                                        </span>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="mt-2 mb-1 me-1 fw-bold">Estado:</span>
+                                        <span [innerHTML]="impressao.estado"> <br />
+                                        </span>
+                                    </div>
+                                
+                                    <div class="col-6">
+                                        <span class="mt-2 mb-1 me-1 fw-bold">Contacto:</span>
+                                        <span [innerHTML]="impressao.telemovel?.toString()"> <br />
+                                        </span>
+                                    </div>
+                                  
+                                    <div class="col-6">
+                                        <span class="mt-2 mb-1 me-1 fw-bold">Método de Pagamento:</span>
+                                        <span [innerHTML]="impressao.metodopagamento"> <br />
+                                        </span>
+                                    </div>
+                                
+                                    <div #myDivResposta{{i}} id="myDivResposta{{i}}"
+                                        [ngClass]="{'ler-mais-box': impressao.lerMais}" class="transicao-resposta"
+                                        [ngStyle]="{'max-height': impressao.tamanho}">
+                 
+                                     
+                                        <div class="col-12">
+                                            <span class="mt-2 mb-1 me-1 fw-bold">Observações:</span>
+                                            <span style="white-space: pre-line"
+                                                [innerHTML]="impressao.observacoesAMostrar ? (impressao.observacoesAMostrar) : 'Sem Observações.'">
+                                                <br />
+                                            </span>
+                                        </div>
+                                        <div class="col-12">
+                                            <span class="mt-2 mb-1 me-1 fw-bold">Anexo:</span>
+                                            <ng-container *ngIf="impressao.anexos?.length else semAnexos">
+                                                <span *ngFor="let anexo of impressao.anexos; let i = index" >
+                                                    {{anexo.fileName}}
+                                                    <button class="mx-2 px-1" pButton icon="pi pi-download"
+                                                        style="font-size: 0.25rem" (click)="getAnexo(anexo._id)"></button>
+                                                </span>
+                                            </ng-container>
+                                            <ng-template #semAnexos>
+                                                Sem Anexos.
+                                            </ng-template>
+                                        </div>
+                                        <p [ngClass]="{'ler-mais' :impressao.lerMais}"
+                                            class="text-primary font-weight-bold text-center"
+                                            (click)="onLerMais(i)">
+                                            <ng-container *ngIf="impressao.lerMais">Ver mais</ng-container>
+                                            <ng-container *ngIf="!impressao.lerMais"><span class="ver-menos">Ver menos</span>
+                                            </ng-container>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <ng-template #emptyList>
+                <div class="empty-message h-100 w-100 p-3">
+                    <span>Não foram encontrados pedidos de impressão 3d.</span>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+    <re-pedidoimpressao3d-modal #pedidoimpressao3d></re-pedidoimpressao3d-modal>
+</section>

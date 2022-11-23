@@ -1,0 +1,20 @@
+<p-toast></p-toast>
+<div
+  class="d-flex justify-content-center align-items-center vh-100"
+  style="background-color: black; color: white"
+>
+  <div class="text-center">
+    <img class="img-fluid w-100 mb-3" src="../../../../../assets/img/logos/logo.png" style="max-width:500px;">  
+    <h1>Bem vindo ao Clube de Robótica da Universidade de Coimbra</h1>
+    <h2>Estamos a preparar o teu clube favorito, fica atento a novidades!</h2>
+    <h3>Podes entrar em contacto connosco através do nosso e-mail:</h3>
+    <h3>
+      <a class="email-clrobotica" href="mailto:clrobotica@deec.uc.pt">clrobotica@deec.uc.pt</a>
+    </h3>
+    <h2 class="mt-5">Podes submeter o teu pedido de impressão 3D aqui:</h2> 
+    <button class="btn btn-outline-info btn-lg fw-bold button-pedido mt-2" (click)="openpedidoimpressao3d()">Pedido Impressão 3D</button>
+   
+  </div>
+</div>
+
+<re-pedidoimpressao3d-modal #pedidoimpressao3d></re-pedidoimpressao3d-modal>

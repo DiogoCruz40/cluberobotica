@@ -1,0 +1,27 @@
+<div class="p-0 container-admin">
+
+<header id="header" class="fixed-top align-items-center">
+  <div *ngIf="!isLoggedIn" id="app px-4">
+    <nav class="navbar navbar-expand navbar-dark bg-dark px-5">
+  
+      <ul class="navbar-nav ms-auto" *ngIf="!isLoggedIn">
+        <li class="nav-item">
+          <a href="./iniciar-sessao" class="nav-link" routerLink="./iniciar-sessao">Iniciar Sessão</a>
+        </li>
+        <li class="nav-item">
+          <a href="./registar" class="nav-link" routerLink="./registar">Registar</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</header>
+
+<ng-container *ngIf="isLoggedIn">
+  <re-sidebar></re-sidebar>
+</ng-container>
+
+
+</div>

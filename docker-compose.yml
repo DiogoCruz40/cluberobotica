@@ -1,0 +1,64 @@
+version: '3.7' # specify docker-compose version
+ 
+# Define the services/containers to be run
+services:
+ frontend:
+   build: ./frontend
+   ports:
+     - "80:4200"
+     - "4005:4005"
+   container_name: frontend
+   command: 
+    - sh
+    - -c
+    - |
+      npm install
+      envsubst < ./src/environments/environment.template.ts > ./src/environments/environment.ts
+      npm run start
+   environment:
+    - API_URL=http://localhost:8080/
+    - CHOKIDAR_USEPOLLING=true
+    - NODE_ENV=dev
+    - TZ=Europe/Lisbon
+   volumes:
+    - "./frontend:/app"
+    - "/etc/timezone:/etc/timezone:ro"
+    - "/etc/localtime:/etc/localtime:ro"
+ backend:
+   build: ./backend
+   ports:
+     - "8080:8080"
+   environment:
+     - MONGO_URL=mongodb://database/clube_de_robotica_db
+     - TZ=Europe/Lisbon
+   links:
+     - database
+   container_name: backend
+   depends_on:
+     - database
+   volumes:
+      - "./backend:/app"
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+ database: # name of the third service
+   container_name: database
+   image: mongo:4.4 # specify image to build container from
+   environment:
+    MONGO_INITDB_ROOT_USERNAME: cluberobotica
+    MONGO_INITDB_ROOT_PASSWORD: k?bQ@2vMxc!HTaxx
+    MONGO_INITDB_DATABASE: clube_de_robotica_db
+    TZ: Europe/Lisbon
+   restart: always
+   ports:
+     - "27017:27017" # specify port forewarding
+   volumes:
+      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+ redis:
+   container_name: redis
+   image: "redis:alpine"
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 173.16.57.1/24

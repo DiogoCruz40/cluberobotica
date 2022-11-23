@@ -1,0 +1,132 @@
+
+<!-- Modal Pedido de Impressão 3d [modal]="true"-->
+
+<p-dialog [(visible)]="modalImpressao3dform" [style]="{width: '50vw'}" [resizable]="false" [draggable]="false"  [autoZIndex]="false"
+   [baseZIndex]="5" (onHide)="closeModalImpressao3d()">
+    <ng-template pTemplate="header" class="pb-2">
+        <div>
+            <h4 class="big-title mt-3 p-0">
+                Formulário Impressão 3d
+            </h4>
+            <hr class="big-title-line mb-3">
+        </div>
+    </ng-template>
+    <div>
+        <form  class="row g-3" [formGroup]="Impressao3dForm">
+          <div class="col-md-4 pt-3 ">
+            <span class="p-float-label">
+              <input formControlName="nome" name="nome" type="text" class="form-control" id="nome"
+                [ngClass]="{'float-input-invalid ng-dirty': submittedImpressao && Impressao3dForm.controls.nome.invalid}"
+                [(ngModel)]="impressao3d.nome" pInputText required>
+              <label for="nome" class="form-label">Nome*</label>
+            </span>
+            <span *ngIf="submittedImpressao && (Impressao3dForm.controls.nome.invalid)">
+              <small class="p-error fw-bold" *ngIf="Impressao3dForm.controls.nome.errors.required">Nome é
+                obrigatório.
+              </small>
+            </span>
+          </div>
+
+          <div class="col-md-4 pt-3 ">
+            <span class="p-float-label">
+              <input formControlName="email" name="email" type="text" class="form-control" id="email"
+                [ngClass]="{'float-input-invalid ng-dirty': submittedImpressao && Impressao3dForm.controls.email.invalid}"
+                [(ngModel)]="impressao3d.email" pInputText>
+              <label for="email" class="form-label">Email*</label>
+            </span>
+            <span *ngIf="submittedImpressao && Impressao3dForm.controls.email.invalid">
+              <small class="p-error fw-bold" *ngIf="Impressao3dForm.controls.email.errors.required">Email é
+                obrigatório.</small>
+              <small class="p-error fw-bold" *ngIf="Impressao3dForm.controls.email.errors.pattern">Email
+                inválido. Ex:
+                exemplo@exemplo.pt
+              </small>
+            </span>
+          </div>
+          <div class="col-md-4 pt-3 ">
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon">
+                <span>+351</span>
+              </span>
+              <span class="p-float-label">
+                <input formControlName="telemovel" name="telemovel" type="number" class="form-control"
+                  [ngClass]="{'float-input-invalid ng-dirty': submittedImpressao && Impressao3dForm.controls.telemovel.invalid}"
+                  id="telemovel" [(ngModel)]="impressao3d.telemovel" pInputText>
+                <label for="telemovel" class="form-label">Telémovel/Telefone*</label>
+              </span>
+            </div>
+            <div *ngIf="submittedImpressao && Impressao3dForm.controls.telemovel.invalid">
+              <small class="p-error fw-bold"
+                *ngIf="Impressao3dForm.controls.telemovel.errors.required">Telémovel/Telefone é
+                obrigatório.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-5 pt-3">
+            <span class="p-float-label">
+              <p-dropdown [options]="opcoespagamento" placeholder="&nbsp;" formControlName="metodopagamento" name="metodopagamento"   [showClear]="true"  id="metodopagamento"
+                [ngClass]="{'float-input-invalid ng-dirty': submittedImpressao && Impressao3dForm.controls.metodopagamento.invalid}"
+                [(ngModel)]="impressao3d.metodopagamento"></p-dropdown>
+              
+              <label for="nome" class="form-label">Método de pagamento*</label>
+            </span>
+            <span *ngIf="submittedImpressao && (Impressao3dForm.controls.metodopagamento.invalid)">
+              <small class="p-error fw-bold" *ngIf="Impressao3dForm.controls.metodopagamento.errors.required">Método de pagamento é
+                obrigatório.
+              </small>
+            </span>
+          </div>
+          <div class="col-md-12 pt-3">
+            <span class="p-float-label">
+              <textarea formControlName="observacoes" class="form-control" name="observacoes" rows="4"
+                id="observacoes" style="resize: none" [(ngModel)]="impressao3d.observacoes"
+                pInputText></textarea>
+              <label for="observacoes" class="form-label">Observações</label>
+            </span>
+          </div>
+            <div class="col-md-12">
+              <div class="col-12 p-0">
+                <label class="font-weight-bold">Anexar Ficheiro 3d (Formato .stl)</label>
+                <span>*</span>
+    
+              </div>
+              <div class="col-12 p-0">
+                <div class="d-flex align-items-center fw-bold">
+                  <span for="file-upload" class="p-button p-component p-fileupload-choose p-ripple me-2"
+                    (click)="fileUpload.click()">
+                    <span class="pi pi-plus p-button-icon p-button-icon-left"></span>
+                    <span class="p-button-label">Adicionar Ficheiro</span>
+                  </span>
+                  {{impressao3d?.ficheiro3d?.name || "Sem ficheiro selecionado."}}
+                  <button class="mx-2" pButton *ngIf="impressao3d.ficheiro3d" icon="pi pi-times"
+                    (click)="removeFile()"></button>
+                  <input type="file" accept=".stl" (change)="handleFileInput($event)"
+                    #fileUpload />
+                </div>
+              </div>
+            </div>
+            <div class="col-12 agree_terms mx-1">
+              <div class="checkbox pt-2">
+                <mat-checkbox formControlName="termos" id="termos" >Li e concordo com
+                  os&nbsp;
+                </mat-checkbox>
+                <a class="agree"> <b (click)="openTermos()">termos de utilização</b></a>.
+                <div *ngIf="submittedImpressao && Impressao3dForm.controls.termos.invalid" style="max-width:350px;">
+                  <small class="p-error fw-bold" *ngIf="Impressao3dForm.controls.termos.errors.required">A
+                    aprovação dos termos é
+                    obrigatório.
+                  </small>
+                </div>
+
+              </div>
+            </div>
+            <re-politica-privacidade-as-modal #politicaPrivacidade></re-politica-privacidade-as-modal>
+        </form>
+        <small>*Após a submissão do seu pedido de impressão 3d esteja atent@ ao email, vai receber toda a informação da sua encomenda por lá. Verifique também o seu spam.</small>
+    </div>
+    <p-footer class="pt-1">
+        <button type="button" class="btn btn-outline-secondary fw-bold" (click)="closeModalImpressao3d()">Cancelar</button>
+        <button type="button" class="btn btn-outline-info fw-bold" (click)="guardarModalImpressao3d()">Submeter</button>
+    </p-footer>
+</p-dialog>

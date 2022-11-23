@@ -1,0 +1,17 @@
+.email-clrobotica{
+    color:aqua;
+    transition: all 0.35s;
+ &:focus,&:hover,&:active{
+
+     color: #009c9c;
+ }    
+ 
+}
+.button-pedido {
+    color:aqua;
+    transition: all 0.35s;
+    &:focus,&:hover,&:active {
+        color: white;
+    }
+}
+

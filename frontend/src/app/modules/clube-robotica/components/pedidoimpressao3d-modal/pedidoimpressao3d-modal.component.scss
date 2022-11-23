@@ -1,0 +1,98 @@
+.card-list {
+    min-height: 100vh;
+    overflow: auto;
+    padding-bottom: 20px;
+  
+    .re-card {
+      background-color: #fcfcfc;
+      width: 95%;
+      box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.1);
+      .card-title {
+        span {
+          color: #009ED0;
+        }
+        font-weight: bold;
+        line-height: 1.2rem;
+      }
+      .card-content {
+        font-size: 1.1rem;
+        line-height: 1.5rem;
+        overflow: hidden;
+      }
+    }
+  }
+  
+  .agree_terms {
+    text-align: left;
+    h2 {
+      margin: 0;
+    }
+    input:focus {
+      box-shadow: none;
+      outline: none;
+    }
+    .agree {
+      color: #009ED0;
+      transition: 0.35s ease-in-out;
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+  }
+  
+
+  //Content Box
+  .container-box {
+    overflow: auto;
+    .content-box {
+      height: calc(100% - 102px);
+    }
+  }
+  
+  section {
+    padding: 30px 0;
+  }
+  
+  .re-card {
+    background-color: #fff;
+    width: 100%;
+    height: auto;
+    min-height: 90px;
+    border-radius: 6px;
+    display: flex;
+    position: relative;
+  }
+  
+  body {
+    height: 100vh;
+    margin: 0;
+  }
+  
+  /* Trick */
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  footer {
+    margin-top: auto;
+  }
+  
+  input[type="file"] {
+    display: none;
+  }
+  .custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  
+.btn-outline-info:hover{
+color: white;
+
+}
+
+:host ::ng-deep .p-dropdown {
+    width: 100%;
+}
